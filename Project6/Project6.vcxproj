@@ -19,19 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="main" />
+    <None Include="main.exe" />
+    <None Include="tc12_mush_ghost" />
+    <None Include="tc14_aclepius_pack" />
+    <None Include="tc17_merlin_pack" />
+    <None Include="tc1_aclepius_pack" />
+    <None Include="tc1_input" />
+    <None Include="tc1_merlin_pack" />
+    <None Include="tc1_mush_ghost" />
+    <None Include="tc2_mush_ghost" />
+    <None Include="tc3_aclepius_pack" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="knight.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="knight.h" />
     <ClInclude Include="main.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="main.exe" />
-    <None Include="tc12_mush_ghost" />
-    <None Include="tc14_aclepius_pack" />
-    <None Include="tc17_merlin_pack" />
-    <None Include="tc1_input" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
