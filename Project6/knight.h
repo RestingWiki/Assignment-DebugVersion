@@ -142,72 +142,26 @@ private:
     string enemy_Name = "None";
 public:
 
-    // Mutators
     void set_CombatType(const int code) {
         type = code;
     };  // Set combat type
 
-    // Accessor
 
 
-    // Constructor
     Enemy_Combat() {
     };
     Enemy_Combat(const int code, const int eve_No): type(code), event_No(eve_No) {
-        set_Name(type);
         set_BaseDmg();
         calc_Level();
     }
 
-    // Print function                                                <--------------------------------------------------------------------------
-    print() {
-        cout << "Enemy type: " << type << "\tName: "<< enemy_Name << "\tBase damage: " << b_Damage << endl;
-        cout << "Enemy LV: " << levelO <<  "\tDamage: " << deal_Damage() << endl;
-    }
-
-
-    // Damage dealt
     double deal_Damage() {
         double dam = b_Damage*levelO*10;
         return dam;
     }
 private:
-    // Set enemy name to keep track
-    void set_Name(const int code) {
 
-        switch (code)
-        {
-        default:
-            break;
-        case 1:
-        {
-            enemy_Name = "MadBear";
-            break;
-        }
-        case 2:
-        {
-            enemy_Name = "Bandit";
-            break;
-        }
-        case 3:
-        {
-            enemy_Name = "LordLupin";
-            break;
-        }
-        case 4:
-        {
-            enemy_Name = "Elf";
-        }
-        case 5:
-        {
-            enemy_Name = "Troll";
-            break;
-        }
-        }
 
-    }
-
-    // Set enemy base damage
     void set_BaseDmg() {
         switch (type)
         {
@@ -242,7 +196,6 @@ private:
 
     }
 
-    // Calculate "levelO"
     void calc_Level() {
         int b = event_No % 10;
         levelO = (event_No > 6 ? (b > 5 ?b : 5) : b);
@@ -254,29 +207,16 @@ public:
 private:
     int event_No = 1;
     int type = 0;
-    string enemy_Name = "Debuff_Enemy";
+
 public:
-    // Constructor
     Enemy_Debuff(const int eve_No, const int code) : event_No(eve_No) , type(code)
     { 
         calc_Level();
-        setName();
     }
-
-
-
 private:
-    // Calculate "levelO"
     void calc_Level() {
         int b = event_No % 10;
         levelO = event_No > 6 ? (b > 5 ? : 5) : b;
-    }
-    // Set name based off event code
-    void setName() {
-        if (type == 6)
-            enemy_Name = "Shaman";
-        if (type == 7)
-            enemy_Name = "Siren Vajsh";
     }
 };
 class Mush_Mario {
@@ -285,11 +225,8 @@ private:
     int s1 = 0;
     int n1;
 public:
-
-    // Constructor
     Mush_Mario(Charac& knight) {
 
-        // Calculate sum
         calc_n1(knight);
         calc_s1();
         add_HP(knight);
@@ -310,19 +247,14 @@ private:
 
         knight.HP += bonus_HP;
         knight.HP++;
-        // Increase knight's hp to prime
         while (  !isPrime(knight.HP)   )
         {
             knight.HP++;
         }
-
-
-        // Set knight's HP to original max vlaue
         knight.setHealth_toMax();
 
     }
 
-    // Check for prime HP
     bool isPrime(int num) {
         if (num <= 1)
             return false;
@@ -348,7 +280,6 @@ private:
         int second = 1;
 public: 
 
-    // Constructor
     Mush_Fib(Charac& knight) {
         int temp;
         if (knight.HP != 1)
@@ -362,7 +293,6 @@ public:
             }
 
 
-            // Drop the knight's HP to the nearest fibonacci number
             knight.HP = first;
 
 
@@ -372,16 +302,10 @@ public:
 };
 class Mush_Ghost {
 private:
-    // Cluster  eg : 133214
     string cluster;
-
-    // File name
     string fName;
-
-    // Mushroom array;
     int* arr_Mush;
     int size;
-    // File's data
     string f_line1 = "0";
     string f_line2 = "0";
     int arr_Num[100];
@@ -390,7 +314,6 @@ private:
     int mush_no = 0;
 
 public:
-    // Constructor
     Mush_Ghost(string token, string fname, Charac& knight) : cluster(token), fName(fname)
     {
         open_MushGhost(knight);
@@ -399,18 +322,9 @@ public:
 private:
 
 
-    /****************
-     * GENERAL USES *
-     ****************/
-    // Open the mush ghost file
     void open_MushGhost(Charac& knight) {
-
-
-        // Create a stream to read file
         ifstream istr;
         istr.open(fName);
-
-        // Check if the file has been opened
         if (istr.is_open())
         {
             ExtractData(istr);
@@ -419,11 +333,8 @@ private:
             convertToArray(knight);               
 
         }
-        else
-        {
-        }
+
     }
-    // Extract the mushroom number;
     void extractMushroom()
     {
         cluster = cluster.substr(2, cluster.length() - 2);
@@ -431,35 +342,23 @@ private:
     void convertToArray(Charac& knight) {
 
          size = cluster.size();
-        // Create a pointer that points to an array of string
-        arr_Mush = new int[size];
+         arr_Mush = new int[size];
 
 
-        // Move each number to the array
         for (int i = 0; i < size; i++)
         {
             arr_Mush[i] = stoi(cluster.substr(i, 1));
         }
 
-        // Handle each mushroom cases
         handleMushroom(knight);
 
-        // Delete array
         delete[] arr_Mush;
     }
-    // Extract Data from file
     void ExtractData(ifstream& istr) {
         getline(istr, f_line1);
         getline(istr, f_line2);
-
-
-
-        // Set the array
         arr_NumSize = stoi(f_line1);
-
-        // Tokenize the second line to fill num_array
     }
-    // Tokenize the second lize
     void tokenizer() {
 
         string::size_type wEnd, wStart;
@@ -471,24 +370,13 @@ private:
             wEnd = f_line2.find_first_of(delimeter, wStart);
             arr_Num[i] = stoi(f_line2.substr(wStart, wEnd - wStart));
             wStart = f_line2.find_first_not_of(delimeter, wEnd);
-
-
-
-            
         }
     }
 
-
-    /***************
-     *  Mushroom 2 *
-     ***************/
-
-    //  Variables
     int pos_peak = 0;
     int mtx = -2;
     int mti = -3;
  
-    // Find the peak position
     void find_PosPeak(int& pos_peak)        
     {
         if (arr_NumSize > 1)
@@ -501,7 +389,6 @@ private:
                 pos_peak = i;
 
             }
-            // Move the peak to the border if necessary
             if (arr_Num[pos_peak] == arr_Num[pos_peak - 1]&& pos_peak != (arr_NumSize -1))
                 pos_peak = pos_peak -1;
             
@@ -516,10 +403,8 @@ private:
 
     }
 
-    // Check increment
     bool check_Increment()
     {
-        // If the peak is on one of the 2 end of the array 
         if (pos_peak == 0 || pos_peak == (arr_NumSize - 1))
         {
             if (!check_Repetition())
@@ -533,8 +418,6 @@ private:
                     return false;
                 }
             }
-            // Checking increment from 0 to before post peak
-
         }
         else
         {
@@ -557,18 +440,13 @@ private:
 
             return true;
     }
-    // Check repetition in a section
     bool check_Repetition() {
-        
-        // Check for even elements
         for (int i = 0; i < arr_NumSize; i++)
         {
             for (int j = i+1; j < arr_NumSize ; j++)
             {                
                 if (arr_Num[i] == arr_Num[j])
                 {
-                   
-                    // Checking even element
                     return false;
                 }
             }
@@ -586,7 +464,6 @@ private:
                 {
                     if (arr_Num[i] == arr_Num[j])
                     {
-                        // Checking repeat element
                         return false;
                     }
                 }
@@ -601,7 +478,6 @@ private:
                 {
                     if (arr_Num[i] == arr_Num[j])
                     {
-                        // Checking repeat element
                         return false;
                     }
                 }
@@ -609,8 +485,6 @@ private:
         }
         return true;
     }
-
-    // Check increment in a section
     bool check_Increment_Sec(const int& post_peak)
     {
         for (int i = 1; i < pos_peak; i++)
@@ -624,16 +498,11 @@ private:
 
         return true;
     }
-
-
-    // Check decrement     PS: don't care about the border of the array since  "check_Increment" has covered that case!!!!
     bool check_Decrement() {
-        // Check repetition from post_peak to the end of the array
         if (!check_Repetition(pos_peak, 1))
         {
             return false;
         }
-        // Check decrement from post peak to the end of the array;
         else
         {
             if (!check_Decrement_Sec(pos_peak))
@@ -645,7 +514,6 @@ private:
 
         return true;
     }
-    // Check decrement in a section
     bool check_Decrement_Sec(const int& post_peak) {
         for (int i = post_peak +1; i < arr_NumSize; i++)
         {
@@ -658,38 +526,20 @@ private:
 
         return true;
     }
-
-
-    /***************
-     *  Mushroom 3 *
-     ***************/
-
-
-    // Variables
     int maxi2 = 0;
     int mini2 = 0;
-
-    // Transform the array and move it into a different array
     void transformation(){
         for (int i = 0; i < arr_NumSize; i++)
         {
-
-            
-            // Transform each element and put it into new array
             if (arr_Num[i] < 0) {
                 arr_NumEX[i] = (17 * -arr_Num[i] + 9) % 257;
             }
             else {
                 arr_NumEX[i] = (17 * arr_Num[i] + 9) % 257;
             }
-            
-
-
         }
 
     }
-
-    // Find mixi2 and mini2
     void findMaxMini() {
         for (int i = 1; i < arr_NumSize; i++)
         {
@@ -700,28 +550,16 @@ private:
         }
 
     }
-
-
-    /***************
-     *  Mushroom 4 *
-     ***************/
-
-    // Variables
     int max_x3 = -5;
     int max_i3 = -7;
     int largest_Index = 0;
-
-    // Functions
     void find_2ndLargerst() {
-
         // Array has one or less elements
         if (arr_NumSize == 0 && arr_NumSize == 1)
         {
         }
-        // Array has only 2 elements
         else if (arr_NumSize == 2)
         {
-            // 2 elements have the same value
             if (arr_NumEX[0] == arr_NumEX[1])
             {
             }
@@ -736,10 +574,8 @@ private:
                 max_i3 = 0;
             }
         }
-        // Array has 3 or more element
         else
         {
-            // 3 elements has the same value
             if (arr_NumEX[0] == arr_NumEX[1] && arr_NumEX[1] == arr_NumEX[2])
             {
                     
@@ -758,10 +594,6 @@ private:
                         }
                     }
                 }
-
-     
-
-
                 max_x3 = arr_NumEX[1];
                 max_i3 = 1;
             }
@@ -771,19 +603,11 @@ private:
 
 
 
-    /*******************************************
-     **     Handle each  Ghost mushroom code  **
-     *******************************************/
     void handleMushroom(Charac&  knight) {
         for (int i = 0; i < size; i++)
         {
-
-           
-            // Type 1 ghost mushroom
             if (arr_Mush[i] == 1)
             { 
-
-                // Find maxi and mini
                 int maxi = 0, mini = 0;
                 for (int i = 1; i < arr_NumSize; i++)
                 {
@@ -793,13 +617,10 @@ private:
                         mini = i;
                 }
 
-                // Calculate new HP after eating shroom
                 knight.HP= knight.HP -(mini + maxi);
 
-                // Try to Revive if HP < 0
                 knight.try_Revive();
 
-                // Stop the loop if the knight can't revive 
                 if (knight.HP <= 0)
                     break;
             }
@@ -810,25 +631,18 @@ private:
 
                 if (arr_NumSize > 1)
                 { 
-                    // Find the initial peak
                     find_PosPeak(pos_peak);
                     
-                    // Find new mtx and mti
                     if (check_Increment() && check_Decrement())
                     {
-                        // Asign new values
                         mtx = arr_Num[pos_peak];
                         mti = pos_peak;
 
                     }
-
-                    // Calculate new HP after eating shroom
                     knight.HP = knight.HP - (mtx + mti);
 
-                    // Try to Revive if HP < 0
                     knight.try_Revive();
 
-                    // Stop the loop if the knight can't revive 
                     if (knight.HP <= 0)
                         break;
                 }
@@ -840,13 +654,10 @@ private:
                 transformation();
                 findMaxMini();
 
-                // Calculate new HP after eating shroom
                 knight.HP = knight.HP - (mini2 + maxi2);
 
-                // Try to Revive if HP < 0
                 knight.try_Revive();
 
-                // Stop the loop if the knight can't revive 
                 if (knight.HP <= 0)
                     break;
 
@@ -856,15 +667,10 @@ private:
                 transformation();
                 find_2ndLargerst();
 
-
-
-                // Calculate new HP after eating shroom
                 knight.HP = knight.HP - (max_i3 + max_x3);
 
-                // Try to Revive if HP < 0
                 knight.try_Revive();
 
-                // Stop the loop if the knight can't revive 
                 if (knight.HP <= 0)
                     break;
             }
@@ -892,31 +698,25 @@ public:
             knight.phoenixdown++;
            
         knight.set_ItemLimit();
-        // In tiny form
 
         if (knight.form == 2)
         {
             knight.remedy--;
             
-            // Un-tiny
             knight.HP = knight.HP * 5;
             knight.setHealth_toMax();
             
-            // Reset
             knight.form = 0;
             knight.forn_count = 0;
         }
 
 
-        // From frog form
         if (knight.form == 1)
         {
             knight.maidenkiss--;
 
-            // Un-frog
             knight.level = knight.og_LVL;
 
-            // Reset
             knight.form = 0;
             knight.forn_count = 0;
         }
@@ -930,7 +730,6 @@ private:
     string f_name;
     string line;
 
-    // Check letter
     string letters1 = "merlin";
     string letters2 = "MERLIN";
     string letters3 = "Merlin";
@@ -942,23 +741,18 @@ public:
 
         if (knight.merlin_Count == 0)
         {
-            // Meeting for the first time
             knight.merlin_Count++;
 
-            // Get the file's full name
 
-            // Read the 
             istr.open(f_name);
             if (istr.is_open())
             {
 
 
 
-                // Get n9
                 getline(istr, line);
                 n9 = stoi(line);
 
-                // Read each line after n9
                 for (int i = 0; i < n9; i++)
                 {
                     getline(istr, line);
@@ -1028,44 +822,33 @@ private:
     string line = "0";
     int count_Potion = 0;
 
-    // Array
     int* arr_Potion;
 
     int r1;
     int c1;
 public:
-
-    // Check letter
-
     God(Charac& knight, const string& fname):f_name(fname) {
         if (knight.god_Count == 0)
         {
             knight.god_Count++;
 
-            // Read the 
             istr.open(f_name);
 
             if (istr.is_open())
             {
                
-                // Get r1
                 getline(istr, line);
                 r1 = stoi(line);
-                
-                // Get c1
                 getline(istr, line);
                     c1 = stoi(line);
 
-
                     arr_Potion = new int[c1];
-                // Read each line after c1
                 for (int i = 0; i < r1; i++)
                 {
                     getline(istr, line);
                     tokenizer(line);
                     count_Potion = 0;
 
-                    // Gather the pack of potion
                     for (int j = 0; j < c1; j++)
                     {
                         if (count_Potion == 3)
@@ -1074,7 +857,6 @@ public:
                         collect(arr_Potion[j], knight,count_Potion);
                     }
                 }
-
 
                 delete[] arr_Potion;
             }
@@ -1093,9 +875,6 @@ private:
             wEnd = line.find_first_of(delimeter, wStart);
             arr_Potion[i] = stoi(line.substr(wStart, wEnd - wStart));
             wStart = line.find_first_not_of(delimeter, wEnd);
-
-    
-
 
         }
     }
@@ -1117,31 +896,25 @@ private:
         }
 
         knight.set_ItemLimit();
-        // In tiny form
 
         if (knight.form == 2)
         {
             knight.remedy--;
 
-            // Un-tiny
             knight.HP = knight.HP * 5;
             knight.setHealth_toMax();
 
-            // Reset
             knight.form = 0;
             knight.forn_count = 0;
         }
 
 
-        // From frog form
         if (knight.form == 1)
         {
             knight.maidenkiss--;
 
-            // Un-frog
             knight.level = knight.og_LVL;
 
-            // Reset
             knight.form = 0;
             knight.forn_count = 0;
         }
