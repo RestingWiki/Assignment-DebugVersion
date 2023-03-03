@@ -160,6 +160,10 @@ public:
     }
 
     // Print function                                                <--------------------------------------------------------------------------
+    print() {
+        cout << "Enemy type: " << type << "\tName: "<< enemy_Name << "\tBase damage: " << b_Damage << endl;
+        cout << "Enemy LV: " << levelO <<  "\tDamage: " << deal_Damage() << endl;
+    }
 
 
     // Damage dealt
