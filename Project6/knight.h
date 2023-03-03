@@ -8,7 +8,7 @@
 
 void display(int HP, int level, int remedy, int maidenkiss, int phoenixdown, int rescue);
 void adventureToKoopa(string file_input, int & HP, int & level, int & remedy, int & maidenkiss, int & phoenixdown, int & rescue);
-void getprefix(string file_input, string& prefix);
+
 void getData(const string& prefix, string& knight, string& event, string& package);
 
 void readKnightData(string file_input, int& HP, int& level, int& remedy, int& maidenkiss, int& phoenixdown, int& rescue);
@@ -43,7 +43,6 @@ public:
         HP(health), level(lvl), remedy(rem), maidenkiss(maid), phoenixdown(phoenix), rescue(res)
     {
         og_MAX = HP;
-        cout << "Class succes" << endl;
         setType();
         set_ItemLimit();
     };
@@ -74,35 +73,20 @@ public:
         level += lvl;
         setLevel_toMax();
     }
-    // Print
-    void print() {
-        
-        cout << "HP=" << HP
-            << ", level=" << level
-            << ", remedy=" << remedy
-            << ", maidenkiss=" << maidenkiss
-            << ", phoenixdown=" << phoenixdown
-            << ", rescue=" << rescue
-            << ", type=" << type 
-            << ",OG_MAX="<< og_MAX << endl;
-            
-    };
+
     void try_Revive() {
         if (HP <= 0)
         {
             // Check for phoenix
             if (phoenixdown > 0)
             {
-                cout << "Revived!" << endl;
                 phoenixdown--;
                 HP = og_MAX;
                 form = 0;
                 forn_count = 0;
-                print();
             }
             else
             {
-                cout << "You DIED!" << endl;
                 rescue = 0;
             }
         }
@@ -176,10 +160,7 @@ public:
     }
 
     // Print function                                                <--------------------------------------------------------------------------
-    print() {
-        cout << "Enemy type: " << type << "\tName: "<< enemy_Name << "\tBase damage: " << b_Damage << endl;
-        cout << "Enemy LV: " << levelO <<  "\tDamage: " << deal_Damage() << endl;
-    }
+
 
     // Damage dealt
     double deal_Damage() {
@@ -260,8 +241,6 @@ private:
     // Calculate "levelO"
     void calc_Level() {
         int b = event_No % 10;
-        cout << "Event no: " << event_No << endl;
-        cout << "(event_No > 6 ? (b > 5 ?b : 5) : b) = " << (event_No > 6 ? (b > 5 ? : 5) : b) << endl;
         levelO = (event_No > 6 ? (b > 5 ?b : 5) : b);
     }
 };
@@ -280,11 +259,7 @@ public:
         setName();
     }
 
-    // Print function                               <--------------------------------------------------------------------------
-    void print() {
-        cout << "Enemy type: " << "Debuff" << "\tName " << enemy_Name << endl;
-        cout << "Enemy LV: " << levelO << endl;
-    }
+
 
 private:
     // Calculate "levelO"
@@ -328,15 +303,12 @@ private:
     void add_HP(Charac& knight) {
 
         bonus_HP = (s1 % 100);
-        cout << "Bonus HP=" << bonus_HP << endl;
 
         knight.HP += bonus_HP;
-        cout << "New HP= " << knight.HP << endl;
         knight.HP++;
         // Increase knight's hp to prime
         while (  !isPrime(knight.HP)   )
         {
-            cout << "Increasing to prime" << endl;
             knight.HP++;
         }
 
@@ -344,9 +316,6 @@ private:
         // Set knight's HP to original max vlaue
         knight.setHealth_toMax();
 
-        // Print after eating
-        cout << "After eating Mario Mushroom. The knight new stats are:" << endl;
-        knight.print();
     }
 
     // Check for prime HP
@@ -388,13 +357,10 @@ public:
                 first = temp;
             }
 
-            cout << "First:  " << first << endl;
-            cout << "Second: " << second << endl;
-            cout << "HP:     " << knight.HP << endl;
 
             // Drop the knight's HP to the nearest fibonacci number
             knight.HP = first;
-            knight.print();
+
 
         }
     }
@@ -437,13 +403,12 @@ private:
 
 
         // Create a stream to read file
-        fstream istr;
+        ifstream istr;
         istr.open(fName);
 
         // Check if the file has been opened
         if (istr.is_open())
         {
-            cout << "File: " << fName << " has been succesfully opened!" << endl;
             ExtractData(istr);
             tokenizer();
             extractMushroom();
@@ -452,15 +417,12 @@ private:
         }
         else
         {
-            cout << "File: " << fName << " CAN'T BE opened!" << endl;
         }
     }
     // Extract the mushroom number;
     void extractMushroom()
     {
-        cout << "Old cluster:" << cluster << endl;
         cluster = cluster.substr(2, cluster.length() - 2);
-        cout << "New cluster: " << cluster << endl;
     }
     void convertToArray(Charac& knight) {
 
@@ -470,21 +432,19 @@ private:
 
 
         // Move each number to the array
-        cout << "Array content:\t";
         for (int i = 0; i < size; i++)
         {
             arr_Mush[i] = stoi(cluster.substr(i, 1));
         }
 
         // Handle each mushroom cases
-        cout << endl;   
         handleMushroom(knight);
 
         // Delete array
         delete[] arr_Mush;
     }
     // Extract Data from file
-    void ExtractData(fstream& istr) {
+    void ExtractData(ifstream& istr) {
         getline(istr, f_line1);
         getline(istr, f_line2);
 
@@ -492,8 +452,6 @@ private:
 
         // Set the array
         arr_NumSize = stoi(f_line1);
-        cout << arr_NumSize << endl;
-        cout << f_line2 << endl;
 
         // Tokenize the second line to fill num_array
     }
@@ -504,7 +462,6 @@ private:
         string delimeter = ",";
         wStart = f_line2.find_first_not_of(delimeter,0);
 
-        cout << "Extracted from "<< fName << endl;
         for (int i = 0; i < arr_NumSize; i++)
         {
             wEnd = f_line2.find_first_of(delimeter, wStart);
@@ -512,12 +469,9 @@ private:
             wStart = f_line2.find_first_not_of(delimeter, wEnd);
 
 
-            // Print
-            
-            cout << arr_Num[i] << "\t";
+
             
         }
-        cout << endl;
     }
 
 
@@ -564,10 +518,8 @@ private:
         // If the peak is on one of the 2 end of the array 
         if (pos_peak == 0 || pos_peak == (arr_NumSize - 1))
         {
-            cout << "Peak is at border!" << endl;
             if (!check_Repetition())
             {
-                cout << "Not strict increment!" << endl;
                 return false;
             }
             else
@@ -585,7 +537,6 @@ private:
             // Check repetition from 0 to post_peak  5 4 3 6 *6
             if (!check_Repetition(pos_peak,0))
             {
-                cout << "Not strict increment!" << endl;
                 return false;
             }
             // Check increment from 0 to before post peak;
@@ -600,7 +551,6 @@ private:
 
         }
 
-        cout << "Strict Incremnt Reached!!!!!!!!!" << endl;
             return true;
     }
     // Check repetition in a section
@@ -615,7 +565,6 @@ private:
                 {
                    
                     // Checking even element
-                    cout << arr_Num[i] << " = " << arr_Num[j] << endl;
                     return false;
                 }
             }
@@ -634,7 +583,6 @@ private:
                     if (arr_Num[i] == arr_Num[j])
                     {
                         // Checking repeat element
-                        cout << arr_Num[i] << " = " << arr_Num[j] << endl;
                         return false;
                     }
                 }
@@ -650,7 +598,6 @@ private:
                     if (arr_Num[i] == arr_Num[j])
                     {
                         // Checking repeat element
-                        cout << arr_Num[i] << " = " << arr_Num[j] << endl;
                         return false;
                     }
                 }
@@ -662,12 +609,10 @@ private:
     // Check increment in a section
     bool check_Increment_Sec(const int& post_peak)
     {
-        cout << "Checking for increment in the first secsion!" << endl;
         for (int i = 1; i < pos_peak; i++)
         {
             if (arr_Num[i - 1] >= arr_Num[i])
             {
-                cout << "Not strict increment IN SECTIONS!" << endl;
                 return false;
             }
 
@@ -682,7 +627,6 @@ private:
         // Check repetition from post_peak to the end of the array
         if (!check_Repetition(pos_peak, 1))
         {
-            cout << "Not strict decrement!" << endl;
             return false;
         }
         // Check decrement from post peak to the end of the array;
@@ -695,17 +639,14 @@ private:
         }
 
 
-        cout << "Strict Decremnt Reached!!!!!!!!!" << endl;
         return true;
     }
     // Check decrement in a section
     bool check_Decrement_Sec(const int& post_peak) {
-        cout << "Checking for decrement in the second secsion!" << endl;
         for (int i = post_peak +1; i < arr_NumSize; i++)
         {
             if (arr_Num[i - 1] <= arr_Num[i])
             {
-                cout << "Not strict decrement IN SECTIONS!" << endl;
                 return false;
             }
 
@@ -729,24 +670,19 @@ private:
         for (int i = 0; i < arr_NumSize; i++)
         {
 
+            
             // Transform each element and put it into new array
-            if (arr_Num[i] < 0)
-            {
-
+            if (arr_Num[i] < 0) {
                 arr_NumEX[i] = (17 * -arr_Num[i] + 9) % 257;
             }
-            else
-             
+            else {
                 arr_NumEX[i] = (17 * arr_Num[i] + 9) % 257;
-            
+            }
             
 
-
-           
-            cout << "[" << arr_NumEX[i] << "]\t";
 
         }
-        cout << endl;
+
     }
 
     // Find mixi2 and mini2
@@ -759,7 +695,6 @@ private:
                 mini2 = i;
         }
 
-        cout << "Maxi2 = " << maxi2 << "\tMini2 = " << mini2 << endl;
     }
 
 
@@ -820,12 +755,7 @@ private:
                     }
                 }
 
-                for (int i = 0; i < 3; i++)
-                {
-                    cout << arr_NumEX[i] << "\t";
-                    
-                }
-                cout << endl;
+     
 
 
                 max_x3 = arr_NumEX[1];
@@ -848,28 +778,21 @@ private:
             // Type 1 ghost mushroom
             if (arr_Mush[i] == 1)
             { 
-                cout << endl;
-                cout << "************************MUSH1*************************" << endl;
-                cout << endl;
 
                 // Find maxi and mini
                 int maxi = 0, mini = 0;
                 for (int i = 1; i < arr_NumSize; i++)
                 {
-                    if (arr_Num[i] >= arr_Num[i - 1])
+                    if (arr_Num[i] > arr_Num[i - 1])
                         maxi = i;
-                    if (arr_Num[i] <= arr_Num[i - 1])
+                    if (arr_Num[i] < arr_Num[i - 1])
                         mini = i;
                 }
-                cout << "MAXI = " << maxi <<  endl;
-                cout << "MINI = " << mini << endl;
-                cout << endl;
 
                 // Calculate new HP after eating shroom
                 knight.HP= knight.HP -(mini + maxi);
 
                 // Try to Revive if HP < 0
-                knight.print();
                 knight.try_Revive();
 
                 // Stop the loop if the knight can't revive 
@@ -879,15 +802,12 @@ private:
 
             else if (arr_Mush[i] == 2)
             { 
-                cout << endl;
-                cout << "************************MUSH2*************************" << endl;
-                cout << endl;
+
 
                 if (arr_NumSize > 1)
                 { 
                     // Find the initial peak
                     find_PosPeak(pos_peak);
-                    cout << "Peak of the array: " << pos_peak << endl;
                     
                     // Find new mtx and mti
                     if (check_Increment() && check_Decrement())
@@ -896,15 +816,12 @@ private:
                         mtx = arr_Num[pos_peak];
                         mti = pos_peak;
 
-                        cout << "New value chosen!" << endl;
-                        cout << "MTX = " << mtx << "\tMTI = " << mti << endl;
                     }
 
                     // Calculate new HP after eating shroom
                     knight.HP = knight.HP - (mtx + mti);
 
                     // Try to Revive if HP < 0
-                    knight.print();
                     knight.try_Revive();
 
                     // Stop the loop if the knight can't revive 
@@ -916,9 +833,6 @@ private:
             }
             else if(arr_Mush[i] == 3)
             {
-                cout << endl;
-                cout << "************************MUSH3*************************" << endl;
-                cout << endl;
                 transformation();
                 findMaxMini();
 
@@ -927,7 +841,7 @@ private:
 
                 // Try to Revive if HP < 0
                 knight.try_Revive();
-                knight.print();
+
                 // Stop the loop if the knight can't revive 
                 if (knight.HP <= 0)
                     break;
@@ -935,13 +849,9 @@ private:
             }
             else if (arr_Mush[i] == 4)
             {
-                cout << endl;
-                cout << "************************MUSH4*************************" << endl;
-                cout << endl;
                 transformation();
                 find_2ndLargerst();
 
-                cout << "Max X3 = " << max_x3 << "\tMax i3 = " << max_i3 << endl;
 
 
                 // Calculate new HP after eating shroom
@@ -949,7 +859,6 @@ private:
 
                 // Try to Revive if HP < 0
                 knight.try_Revive();
-                knight.print();
 
                 // Stop the loop if the knight can't revive 
                 if (knight.HP <= 0)
@@ -972,9 +881,7 @@ public:
 
 
         if (code == 15)
-
             knight.remedy++;
-
         if (code == 16)
             knight.maidenkiss++;
         if (code == 17)
@@ -985,7 +892,6 @@ public:
 
         if (knight.form == 2)
         {
-            cout << "You use the remedy you picked up!" << endl;
             knight.remedy--;
             
             // Un-tiny
@@ -1001,7 +907,6 @@ public:
         // From frog form
         if (knight.form == 1)
         {
-            cout << "You use the maidenkiss you picked up!" << endl;
             knight.maidenkiss--;
 
             // Un-frog
@@ -1017,7 +922,7 @@ public:
 class Merlin
 {
 private:
-    fstream istr;
+    ifstream istr;
     string f_name;
     string line;
 
@@ -1042,13 +947,11 @@ public:
             istr.open(f_name);
             if (istr.is_open())
             {
-                cout << "File " << f_name << " opened succesfully!!!" << endl;
 
 
 
                 // Get n9
                 getline(istr, line);
-                cout << line << endl;
                 n9 = stoi(line);
 
                 // Read each line after n9
@@ -1057,12 +960,10 @@ public:
                     getline(istr, line);
                     if (checkEnchanted2(line))
                     { 
-                        cout << "HP+3" << endl;
                         bonus_HP = 3;
                     }
                     else if (checkEnchanted(line))
                     { 
-                        cout << "HP+2" << endl;
                         bonus_HP = 2;
                     }
                     knight.HP += bonus_HP;
@@ -1118,17 +1019,16 @@ private:
 };
 class God {
 private:
-    fstream istr;
+    ifstream istr;
     string f_name;
     string line = "0";
-    
+    int count_Potion = 0;
 
     // Array
     int* arr_Potion;
 
     int r1;
     int c1;
-    int count_Potion = 0;
 public:
 
     // Check letter
@@ -1143,17 +1043,14 @@ public:
 
             if (istr.is_open())
             {
-                cout << "File " << f_name << " opened succesfully!!!" << endl;
-
+               
                 // Get r1
                 getline(istr, line);
-                cout << "R1 = " << line << endl;
                 r1 = stoi(line);
                 
                 // Get c1
                 getline(istr, line);
                     c1 = stoi(line);
-                    cout << "C1 = " << line << endl;
 
 
                     arr_Potion = new int[c1];
@@ -1163,13 +1060,14 @@ public:
                     getline(istr, line);
                     tokenizer(line);
                     count_Potion = 0;
+
                     // Gather the pack of potion
                     for (int j = 0; j < c1; j++)
                     {
-                        if (count_Potion ==3)
+                        if (count_Potion == 3)
                             break;
 
-                        collect(arr_Potion[j], knight,  count_Potion);
+                        collect(arr_Potion[j], knight,count_Potion);
                     }
                 }
 
@@ -1192,16 +1090,14 @@ private:
             arr_Potion[i] = stoi(line.substr(wStart, wEnd - wStart));
             wStart = line.find_first_not_of(delimeter, wEnd);
 
-            // Print
+    
 
-            cout << arr_Potion[i] << "\t";
 
         }
-        cout << endl;
     }
     void collect(int code, Charac& knight, int& count_Potion) {
         if (code == 16 || code == -16)
-        { 
+        {
             knight.remedy++;
             count_Potion++;
         }
@@ -1215,12 +1111,12 @@ private:
             knight.phoenixdown++;
             count_Potion++;
         }
+
         knight.set_ItemLimit();
         // In tiny form
 
         if (knight.form == 2)
         {
-            cout << "You use the remedy you picked up!" << endl;
             knight.remedy--;
 
             // Un-tiny
@@ -1236,7 +1132,6 @@ private:
         // From frog form
         if (knight.form == 1)
         {
-            cout << "You use the maidenkiss you picked up!" << endl;
             knight.maidenkiss--;
 
             // Un-frog
@@ -1251,7 +1146,7 @@ private:
     }
 };
 void package_Token(string&, string&, string&, string& package);
-void go_Adventure(int* arr, int size, Charac& knight, const string& prefix,string& ghost, string& god, string& merlin);
+void go_Adventure(int* arr, int size, Charac& knight,string& ghost, string& god, string& merlin);
 void debuff_Tracker(Charac& knight);
 
 #endif // __KNIGHT_H__
