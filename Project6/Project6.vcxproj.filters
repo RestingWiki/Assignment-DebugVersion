@@ -17,33 +17,4 @@
       <UniqueIdentifier>{9a4ecab6-4917-4eef-b33b-ee30df7de626}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="tc1_aclepius_pack" />
-    <None Include="tc1_input" />
-    <None Include="tc1_merlin_pack" />
-    <None Include="tc1_mush_ghost" />
-    <None Include="tc2_mush_ghost" />
-    <None Include="tc3_aclepius_pack" />
-    <None Include="tc12_mush_ghost" />
-    <None Include="tc14_aclepius_pack" />
-    <None Include="tc17_merlin_pack" />
-    <None Include="main" />
-    <None Include="main.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="knight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="knight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>
