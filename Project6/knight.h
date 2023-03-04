@@ -811,7 +811,7 @@ private:
 
                 smallest = min(arr_NumEX[0], arr_NumEX[1]);
                 largest = max(arr_NumEX[0], arr_NumEX[1]);
-                smallest = min(smallest, arr_NumEX[2]);
+                largest = min(smallest, arr_NumEX[2]);
                 smallest = max(largest, arr_NumEX[2]);
 
 
@@ -827,7 +827,7 @@ private:
                 // Find the second largest and its position in the array
                 for (int i = 0; i < 3; i++)
                 {
-                    if (!((arr_NumEX[i] == smallest) ||  (arr_NumEX[i] == largest)))
+                    if (!((arr_NumEX[i] != smallest) &&  (arr_NumEX[i] != largest)))
                     {
                         max_i3 = i;
                         max_x3 = arr_NumEX[i];
