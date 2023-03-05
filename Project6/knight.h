@@ -269,7 +269,7 @@ private:
     // Calculate "levelO"
     void calc_Level() {
         int b = event_No % 10;
-        levelO = event_No > 6 ? (b > 5 ? : 5) : b;
+        levelO = (event_No > 6 ? (b > 5 ? b : 5) : b);
     }
     // Set name based off event code
     void setName() {
