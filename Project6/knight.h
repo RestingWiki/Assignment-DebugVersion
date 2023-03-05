@@ -871,6 +871,7 @@ private:
 
                 // Calculate new HP after eating shroom
                 knight.HP= knight.HP -(mini + maxi);
+                knight.setHealth_toMax();
 
                 // Try to Revive if HP < 0
                 knight.print();
@@ -906,6 +907,7 @@ private:
 
                     // Calculate new HP after eating shroom
                     knight.HP = knight.HP - (mtx + mti);
+                    knight.setHealth_toMax();
 
                     // Try to Revive if HP < 0
                     knight.print();
@@ -928,6 +930,7 @@ private:
 
                 // Calculate new HP after eating shroom
                 knight.HP = knight.HP - (mini2 + maxi2);
+                knight.setHealth_toMax();
 
                 // Try to Revive if HP < 0
                 knight.try_Revive();
